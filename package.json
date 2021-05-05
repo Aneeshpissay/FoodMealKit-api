@@ -1,0 +1,23 @@
+{
+  "name": "foodmealkitblog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aneeshpissay/FoodMealKit-api.git"
+  },
+  "author": "Aneesh Pissay",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aneeshpissay/FoodMealKit-api/issues"
+  },
+  "homepage": "https://github.com/Aneeshpissay/FoodMealKit-api#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.12.7"
+  }
+}
