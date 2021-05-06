@@ -8,7 +8,7 @@ exports.register = (req, res) => {
     newUser.hash_password = bcrypt.hashSync(req.body.password, 10);
     newUser.save(function(err, user) {
     if (err) {
-      return res.status(400).send({
+      return res.json({
         message: err
       });
     } else {
