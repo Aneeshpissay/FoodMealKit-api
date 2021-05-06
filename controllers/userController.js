@@ -22,9 +22,9 @@ exports.sign_in = async (req, res) => {
   try {
       const {email, password } = req.body;
       const user = await User.findOne({email});
-      if(!user) return res.status(400).json({msg: 'User does not exist'});
+      if(!user) return res.json({msg: 'User does not exist'});
       const isMatch = await bcrypt.compare(password, user.hash_password);
-      if(!isMatch) return res.status(400).json({msg: 'Incorrect Password'});
+      if(!isMatch) return res.json({msg: 'Incorrect Password'});
       const accessToken = jwt.sign({ email: user.email, username: user.username, _id: user._id }, 'RESTFULAPIs');
       res.cookie('token', accessToken, {
           httpOnly: true
