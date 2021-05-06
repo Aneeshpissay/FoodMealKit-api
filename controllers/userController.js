@@ -13,7 +13,7 @@ exports.register = (req, res) => {
       });
     } else {
       user.hash_password = undefined;
-      return res.json(user);
+      return res.json({success: true});
     }
   });
 }
