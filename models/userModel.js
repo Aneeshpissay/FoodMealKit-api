@@ -13,7 +13,10 @@ var UserSchema = new Schema({
     unique: true,
     lowercase: true,
     trim: true,
-    required: true
+  },
+  phone: {
+    type: String,
+    unique: true
   },
   hash_password: {
     type: String

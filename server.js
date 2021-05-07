@@ -6,7 +6,6 @@ const express = require('express'),
     mongoose = require('mongoose'),
     cookieParser = require('cookie-parser'),
     cors = require('cors');
-
 require('dotenv').config();
 
 const mongoURI = process.env.MONGODB_URI;
@@ -33,7 +32,6 @@ app.use((req, res, next) => {
       next();
     }
 });
-
 var routes = require('./route/userRoute');
 routes(app);
 
