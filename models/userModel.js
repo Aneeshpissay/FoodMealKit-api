@@ -23,8 +23,7 @@ var UserSchema = new Schema({
     default: false
   },
   otp: {
-    type: Number,
-    unique: true
+    type: Number
   },
   hash_password: {
     type: String
