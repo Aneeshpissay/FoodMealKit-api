@@ -18,6 +18,14 @@ var UserSchema = new Schema({
     type: String,
     unique: true
   },
+  auth: {
+    type: Boolean,
+    default: false
+  },
+  otp: {
+    type: Number,
+    unique: true
+  },
   hash_password: {
     type: String
   }

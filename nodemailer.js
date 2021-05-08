@@ -8,8 +8,8 @@ exports.main = async (email, subject, html) => {
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-        user: process.env.GMAIL_EMAIL,
-        pass: process.env.GMAIL_PASS
+            user: process.env.GMAIL_EMAIL,
+            pass: process.env.GMAIL_PASS
         },
     });
     await transporter.sendMail({
