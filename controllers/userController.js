@@ -8,14 +8,14 @@ exports.register = (req, res) => {
     var newUser = new User(req.body);
     newUser.hash_password = bcrypt.hashSync(req.body.password, 10);
     const randomOTP = Math.floor(100000 + Math.random() * 900000);
-    newUser.otp = randomOTP;
+    newUser.phoneotp = randomOTP;
     newUser.save(function(err, user) {
     if (err) {
       return res.json({
         message: err
       });
     } else {
-      main(user.email, `Thank you for registering ${user.username}`, `<p>Please enter the otp token: ${user.otp}</p>`);
+      main(user.email, `Thank you for registering ${user.username}`, `<p>Please enter the otp token: ${user.phoneotp}</p>`);
       user.hash_password = undefined;
       return res.json({success: true});
     }
@@ -42,10 +42,10 @@ exports.sign_in = async (req, res) => {
 
 exports.otpLogin = async ( req, res ) => {
   try {
-    const { otp, email } = req.body;
+    const { phoneotp, email } = req.body;
     const user = await User.findOne({email});
-    if(user.otp === otp) {
-      user.otp = null;
+    if(user.phoneotp === phoneotp) {
+      user.phoneotp = null;
       user.auth = true;
       user.save();
       main(user.email, `You have successfully registed`, `<p>Please enjoy the tasty recipes</p>`);
