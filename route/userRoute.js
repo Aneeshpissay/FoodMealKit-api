@@ -9,5 +9,7 @@ module.exports = (app) => {
     app.route('/sendotp')
         .post(userSignin);
     app.route('/login/:phone/:otp')
-        .get(userLogin)
+        .get(userLogin);
+    app.route('/login/otp')
+        .get(userHandlers.otpLogin);
 }
