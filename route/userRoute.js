@@ -10,6 +10,6 @@ module.exports = (app) => {
         .post(userSignin);
     app.route('/login/:phone/:otp')
         .get(userLogin);
-    app.route('/login/otp')
+    app.route('/email/otp')
         .get(userHandlers.otpLogin);
 }
