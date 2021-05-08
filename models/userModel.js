@@ -22,7 +22,7 @@ var UserSchema = new Schema({
     type: Boolean,
     default: false
   },
-  otp: {
+  phoneotp: {
     type: Number
   },
   hash_password: {
