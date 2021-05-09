@@ -45,7 +45,7 @@ exports.otpLogin = async ( req, res ) => {
     const { phoneotp, email } = req.body;
     const user = await User.findOne({email});
     if(user.phoneotp === phoneotp) {
-      user.phoneotp = null;
+      user.phoneotp = 0;
       user.auth = true;
       user.save();
       main(user.email, `You have successfully registed`, `<p>Please enjoy the tasty recipes</p>`);
