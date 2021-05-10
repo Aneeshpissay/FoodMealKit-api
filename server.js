@@ -15,7 +15,8 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true, us
     console.log(err);
 });
 
-app.use(cors())
+app.use(cors());
+app.options('*', cors());
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
