@@ -2,7 +2,7 @@ const express = require('express'),
     app = express(),
     PORT = process.env.PORT || 4000,
     User = require('./models/userModel'),
-    jsonwebtoken = require("jsonwebtoken"),
+    jwt = require("jsonwebtoken"),
     mongoose = require('mongoose'),
     cookieParser = require('cookie-parser'),
     cors = require('cors');
@@ -21,20 +21,13 @@ app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use((req, res, next) => {
-    if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
-      jsonwebtoken.verify(req.headers.authorization.split(' ')[1], 'RESTFULAPIs', function(err, decode) {
-        if (err) req.user = undefined;
-        req.user = decode;
-        next();
-      });
-    } else {
-      req.user = undefined;
-      next();
-    }
-});
-var routes = require('./route/userRoute');
-routes(app);
+var userRoute = require('./route/userRoute');
+var vegetableRoute = require('./route/vegetableRoute');
+var recipeRoute = require('./route/recipeRoute');
+
+userRoute(app);
+vegetableRoute(app);
+recipeRoute(app);
 
 app.use((req, res) => {
     res.status(404).send({ url: req.originalUrl + ' not found' });
