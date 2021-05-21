@@ -18,4 +18,8 @@ module.exports = (app) => {
                 name: 'stepImage',
             }
         ]), recipeHandlers.postRecipe);
+    app.route('/recipe')
+       .get( verifyToken, recipeHandlers.getRecipe );
+    app.route('/recipe/:recipeId')
+       .get( verifyToken, recipeHandlers.getRecipeById );
 }
