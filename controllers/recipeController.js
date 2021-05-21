@@ -15,7 +15,7 @@ exports.postRecipe = async (req, res) => {
 exports.getRecipe = async (req, res) => {
     const privateRecipe = await Recipe.findOne({private: true});
     const publicRecipe = await Recipe.findOne({private: false});
-    res.json(privateRecipe, publicRecipe);
+    res.json({privateRecipe: privateRecipe, publicRecipe: publicRecipe});
 }
 
 exports.getRecipeById = async (req, res) => {
