@@ -11,3 +11,14 @@ exports.postRecipe = async (req, res) => {
     recipe.save();
     res.json({success: true});
 }
+
+exports.getRecipe = async (req, res) => {
+    const privateRecipe = await Recipe.findOne({private: true});
+    const publicRecipe = await Recipe.findOne({private: false});
+    res.json(privateRecipe, publicRecipe);
+}
+
+exports.getRecipeById = async (req, res) => {
+    const recipeById = await Recipe.findById(req.params.recipeId);
+    res.json(recipeById);
+}
