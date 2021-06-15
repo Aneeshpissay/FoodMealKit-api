@@ -1,9 +1,6 @@
-var Fruits = require('../models/fruitsModel');
-var Vegetable = require('../models/vegetablesModel');
+var AllIngredients = require('../models/allIngredients');
 
 exports.getAllIngredients = async (req, res) => {
-    const fruit = await Fruits.find().sort({"name": 1});
-    const vegetable = await Vegetable.find().sort({"name": 1});
-    const allIngredients = fruit.concat(vegetable);
+    const allIngredients = await AllIngredients.find().sort({"name": 1});
     res.json(allIngredients);
 }
