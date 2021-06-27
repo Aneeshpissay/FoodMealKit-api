@@ -7,14 +7,8 @@ module.exports = (app) => {
     app.route('/create/recipe')
         .post( upload.fields([
             {
-                name: 'recipeImage',
-            },
-            {
                 name: 'recipeVideo',
                 maxCount: 1
-            },
-            {
-                name: 'stepImage',
             }
         ]), recipeHandlers.postRecipe);
     app.route('/recipe')
