@@ -1,4 +1,3 @@
-const { verifyToken } = require('../authenticate');
 const {storage } = require('../cloudinary');
 var multer = require('multer');
 const upload = multer({storage});
@@ -6,7 +5,7 @@ var recipeHandlers = require('../controllers/recipeController');
 
 module.exports = (app) => {
     app.route('/create/recipe')
-        .post( verifyToken , upload.fields([
+        .post( upload.fields([
             {
                 name: 'recipeImage',
             },
@@ -19,7 +18,7 @@ module.exports = (app) => {
             }
         ]), recipeHandlers.postRecipe);
     app.route('/recipe')
-       .get( verifyToken, recipeHandlers.getRecipe );
+       .get( recipeHandlers.getRecipe );
     app.route('/recipe/:recipeId')
-       .get( verifyToken, recipeHandlers.getRecipeById );
+       .get( recipeHandlers.getRecipeById );
 }
