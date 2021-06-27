@@ -21,9 +21,7 @@ const FileSchema = new Schema({
 });
 
 var RecipeSchema = new Schema({
-  recipeImage: [{
-    type: String
-  }],
+  recipeImage: [FileSchema],
   recipeVideo: FileSchema,
   title: {
     type: String,
