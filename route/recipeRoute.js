@@ -5,12 +5,7 @@ var recipeHandlers = require('../controllers/recipeController');
 
 module.exports = (app) => {
     app.route('/create/recipe')
-        .post( upload.fields([
-            {
-                name: 'recipeVideo',
-                maxCount: 1
-            }
-        ]), recipeHandlers.postRecipe);
+        .post( recipeHandlers.postRecipe);
     app.route('/recipe')
        .get( recipeHandlers.getRecipe );
     app.route('/recipe/:recipeId')
