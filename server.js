@@ -8,8 +8,6 @@ const express = require('express'),
     cors = require('cors');
 require('dotenv').config();
 
-app.use(cors());
-
 var userRoute = require('./route/userRoute');
 var vegetableRoute = require('./route/vegetableRoute');
 var recipeRoute = require('./route/recipeRoute');
@@ -23,6 +21,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true, us
     console.log(err);
 });
 
+app.use(cors());
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
