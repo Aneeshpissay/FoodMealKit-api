@@ -57,14 +57,6 @@ var RecipeSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Comment"
   }],
-  author: {
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-    },
-    username: String,
-    phone: String
-  },
   published: {
       type: Boolean,
       default: false
