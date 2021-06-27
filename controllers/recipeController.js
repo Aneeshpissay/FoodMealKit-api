@@ -8,8 +8,15 @@ exports.postRecipe = async (req, res) => {
         // const token = req.token;
         // const decoded = jwt.verify(token, "RESTFULAPIs");
         // recipe.author = {id: decoded._id, username: decoded.username, phone: decoded.phone};
-        recipe.save();
-        res.json(recipe);
+        recipe.save((err) => {
+            if (err){
+                res.json(err);
+            }
+            else {
+                res.json({success: true})
+            }
+            
+          });
     } catch (error) {
         res.json(error);
     }
