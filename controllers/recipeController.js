@@ -9,7 +9,7 @@ exports.postRecipe = async (req, res) => {
         // const decoded = jwt.verify(token, "RESTFULAPIs");
         // recipe.author = {id: decoded._id, username: decoded.username, phone: decoded.phone};
         recipe.save();
-        res.json({success: true});
+        res.json(recipe);
     } catch (error) {
         res.json(error);
     }
