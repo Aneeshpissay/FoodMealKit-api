@@ -21,7 +21,6 @@ exports.postRecipe = async (req, res) => {
             preparationObj.stepImage.map(f => cloudinary.uploader.upload(f, {folder: 'Food Meal Kit Blog'}, (err, res) => {
                 console.log({url: res.secure_url, filename: res.original_filename, type: res.type, size: res.bytes});
             }))
-            console.log(data);
             return preparationObj;
         })
         // recipe.recipeVideo = {url: req.files.recipeVideo[0].path, filename: req.files.recipeVideo[0].filename, type: req.files.recipeVideo[0].mimetype, size: req.files.recipeVideo[0].size};
