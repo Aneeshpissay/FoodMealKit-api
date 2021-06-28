@@ -1,5 +1,12 @@
 var jwt = require("jsonwebtoken");
 var Recipe = require('../models/recipeModel');
+var { cloudinary } = require('../cloudinary');
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+});
 
 exports.postRecipe = async (req, res) => {
     try {
@@ -11,7 +18,10 @@ exports.postRecipe = async (req, res) => {
         })
         recipe.preparation = req.body.preparation.map((preparation) => {
             var preparationObj = JSON.parse(preparation);
-            console.log(preparationObj);
+            var data = preparationObj.stepImage.map(f => cloudinary.uploader.upload(f, {folder: 'Food Meal Kit Blog'}, (err, res) => {
+                return {url: res.secure_url, filename: res.original_filename, type: res.type, size: res.bytes}
+            }))
+            console.log(data);
             return preparationObj;
         })
         // recipe.recipeVideo = {url: req.files.recipeVideo[0].path, filename: req.files.recipeVideo[0].filename, type: req.files.recipeVideo[0].mimetype, size: req.files.recipeVideo[0].size};
