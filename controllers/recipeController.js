@@ -11,9 +11,8 @@ exports.postRecipe = async (req, res) => {
         })
         recipe.preparation = req.body.preparation.map((preparation) => {
             var preparationObj = JSON.parse(preparation);
-            return {
-                method: preparationObj.method
-            }
+            console.log(preparationObj);
+            return preparationObj;
         })
         // recipe.recipeVideo = {url: req.files.recipeVideo[0].path, filename: req.files.recipeVideo[0].filename, type: req.files.recipeVideo[0].mimetype, size: req.files.recipeVideo[0].size};
         // const token = req.token;
