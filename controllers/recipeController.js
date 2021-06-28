@@ -16,18 +16,12 @@ exports.postRecipe = async (req, res) => {
             var ingObj = JSON.parse(ingredient);
             return ingObj;
         })
-        for(var i=0; i < req.body.preparation.length; i++) {
-            var preparationObj = JSON.parse(req.body.preparation[i]);
-            for(var j=0; j < preparationObj.stepImage.length; j++) {
-                console.log(preparationObj.stepImage[j])
-            }
-        }
         recipe.preparation = req.body.preparation.map((preparation) => {
             var preparationObj = JSON.parse(preparation);
-            preparationObj.stepImage.map(f => cloudinary.uploader.upload(f, {folder: 'Food Meal Kit Blog'}, (err, res) => {
-                console.log({url: res.secure_url, filename: res.original_filename, type: res.type, size: res.bytes});
-            }))
-            return preparationObj;
+            return {
+                method: preparationObj.method,
+                stepImage: preparationObj.stepImage.map(f => cloudinary.uploader.upload(f, {folder: 'Food Meal Kit Blog'}, (err, res) => ({url: res.secure_url, type: res.resource_type, size: res.bytes})))
+            };
         })
         // recipe.recipeVideo = {url: req.files.recipeVideo[0].path, filename: req.files.recipeVideo[0].filename, type: req.files.recipeVideo[0].mimetype, size: req.files.recipeVideo[0].size};
         // const token = req.token;
