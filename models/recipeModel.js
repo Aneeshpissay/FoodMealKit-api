@@ -47,7 +47,9 @@ var RecipeSchema = new Schema({
       method: {
           type: String
       },
-      stepImage: [FileSchema]
+      stepImage: [{
+        type: String
+      }]
   }],
   comments: [{
     type: mongoose.Schema.Types.ObjectId,
