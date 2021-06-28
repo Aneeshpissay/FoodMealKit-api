@@ -16,6 +16,12 @@ exports.postRecipe = async (req, res) => {
             var ingObj = JSON.parse(ingredient);
             return ingObj;
         })
+        for(var i=0; i < req.body.preparation.length; i++) {
+            var preparationObj = JSON.parse(req.body.preparation[i]);
+            for(var j=0; j < preparationObj.stepImage.length; j++) {
+                console.log(preparationObj.stepImage[j])
+            }
+        }
         recipe.preparation = req.body.preparation.map((preparation) => {
             var preparationObj = JSON.parse(preparation);
             preparationObj.stepImage.map(f => cloudinary.uploader.upload(f, {folder: 'Food Meal Kit Blog'}, (err, res) => {
