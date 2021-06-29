@@ -19,7 +19,7 @@ exports.postRecipe = async (req, res) => {
         // recipe.author = {id: decoded._id, username: decoded.username, phone: decoded.phone};
         recipe.save((err) => {
             if (err){
-                res.json(err);
+                console.log(err);
             }
             else {
                 res.json({success: true})
@@ -27,7 +27,7 @@ exports.postRecipe = async (req, res) => {
             
           });
     } catch (error) {
-        res.json(error);
+        console.log(error);
     }
 }
 
