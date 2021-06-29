@@ -13,7 +13,7 @@ exports.postRecipe = async (req, res) => {
             var preparationObj = JSON.parse(preparation);
             return preparationObj;
         })
-        console.log(req.files.recipeVideo);
+        console.log(req.files)
         // recipe.recipeVideo = {url: req.files.recipeVideo[0].path, filename: req.files.recipeVideo[0].filename, type: req.files.recipeVideo[0].mimetype, size: req.files.recipeVideo[0].size};
         // const token = req.token;
         // const decoded = jwt.verify(token, "RESTFULAPIs");
