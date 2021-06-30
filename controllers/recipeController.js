@@ -24,7 +24,7 @@ exports.postRecipe = async (req, res) => {
                 console.log(err);
             }
             else {
-                res.json({success: true})
+                res.json({success: true});
             }
             
           });
@@ -42,4 +42,17 @@ exports.getRecipe = async (req, res) => {
 exports.getRecipeById = async (req, res) => {
     const recipeById = await Recipe.findById(req.params.recipeId);
     res.json(recipeById);
+}
+
+exports.publishRecipe = async (req, res) => {
+    const recipeById = await Recipe.findById(req.params.recipeId);
+    recipeById.published = true;
+    recipeById.save((err) => {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            res.json({success: true});
+        }
+    })
 }

@@ -21,4 +21,6 @@ module.exports = (app) => {
        .get( recipeHandlers.getRecipe );
     app.route('/recipe/:recipeId')
        .get( recipeHandlers.getRecipeById );
+    app.route('/publish/recipe/:recipeId')
+        .get( recipeHandlers.publishRecipe );
 }
