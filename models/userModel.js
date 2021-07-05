@@ -1,6 +1,43 @@
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
+var AddressSchema = new Schema({
+  fullname: {
+    type: String
+  },
+  phone: {
+    type: String
+  },
+  pincode: {
+    type: Number
+  },
+  state: {
+    type: String
+  },
+  city: {
+    type: String
+  },
+  houseno: {
+    type: String
+  },
+  roadname: {
+    type: String
+  },
+  area: {
+    type: String
+  },
+  landmark: {
+    type: String
+  },
+});
+
+const PhotoSchema = new Schema({
+  url: String,
+  filename: String,
+  type: String,
+  size: Number
+});
+
 var UserSchema = new Schema({
   username: {
     type: String,
@@ -17,14 +54,8 @@ var UserSchema = new Schema({
     type: String,
     unique: true
   },
-  auth: {
-    type: Boolean,
-    default: false
-  },
-  phoneotp: {
-    type: Number
-  },
-  hash_password: {
+  address: [AddressSchema],
+  photo: PhotoSchema || {
     type: String
   }
 });
