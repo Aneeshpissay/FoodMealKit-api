@@ -8,6 +8,8 @@ module.exports = (app) => {
     app.route('/auth/login')
         .post(userHandlers.login);
     app.route('/profile')
+        .get(userHandlers.getProfile)
+    app.route('/profile')
         .put(upload.fields([
             {
                 name: 'profilephoto',

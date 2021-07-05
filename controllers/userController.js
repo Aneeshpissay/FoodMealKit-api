@@ -1,9 +1,17 @@
 var User = require('../models/userModel');
+var jwt = require('jsonwebtoken');
 
 exports.login = (req, res) => {
     const user = new User(req.body);
     user.save();
     res.json({success: true});
+}
+
+exports.getProfile = async (req, res) => {
+    const usertoken = req.headers['authorization'];
+    const token = usertoken.split(' ');
+    const decoded = jwt.verify(token[1], 'RESTFULAPIs');
+    res.json(decoded);
 }
 
 exports.editProfile = async (req, res) => {
