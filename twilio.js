@@ -46,7 +46,7 @@ exports.userLogin = (req, res, next) => {
                 .then((data) => {
                     if (data.valid) {
                         User.create({
-                            username: req.body.username,
+                            username: req.params.username,
                             phone: req.params.phone
                         })
                         .then((user)=>{

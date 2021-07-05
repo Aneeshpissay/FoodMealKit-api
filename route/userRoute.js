@@ -15,6 +15,6 @@ module.exports = (app) => {
         ]),userHandlers.editProfile);
     app.route('/sendotp')
         .post(userSignin);
-    app.route('/login/:phone/:otp')
+    app.route('/login/:phone/:otp/:username')
         .get(userLogin);
 }
