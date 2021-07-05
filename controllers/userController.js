@@ -8,10 +8,16 @@ exports.login = (req, res) => {
 }
 
 exports.getProfile = async (req, res) => {
-    const usertoken = req.headers['authorization'];
-    const token = usertoken.split(' ');
-    const decoded = jwt.verify(token[1], 'RESTFULAPIs');
-    res.json(decoded);
+    try {
+        const usertoken = req.headers['authorization'];
+        const token = usertoken.split(' ');
+        const decoded = jwt.verify(token[1], 'RESTFULAPIs');
+        const id = decoded._id;
+        const user = await User.findById(id);
+        res.json({user: user, success: true});
+    } catch (error) {
+        res.json({success: false});
+    }
 }
 
 exports.editProfile = async (req, res) => {
