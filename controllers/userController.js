@@ -21,11 +21,18 @@ exports.getProfile = async (req, res) => {
 }
 
 exports.editProfile = async (req, res) => {
-    const user = await User.findById(req.params.userid);
+    const usertoken = req.headers['authorization'];
+    const token = usertoken.split(' ');
+    const decoded = jwt.verify(token[1], 'RESTFULAPIs');
+    const id = decoded._id;
+    const user = await User.findById(id);
+    if(req.body.address) {
+        user.address.push(req.body.address);
+    }
     if(req.body.username) {
         user.username = req.body.username;
     }
-    if(req.files.profilephoto) {
+    if(req.files?.profilephoto) {
         user.photo = {url: req.files.profilephoto[0].path, filename: req.files.profilephoto[0].filename, type: req.files.profilephoto[0].mimetype, size: req.files.profilephoto[0].size};
     }
     user.save();
