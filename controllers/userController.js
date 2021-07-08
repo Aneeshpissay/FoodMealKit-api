@@ -21,7 +21,7 @@ exports.getProfile = async (req, res) => {
 }
 
 exports.editProfile = async (req, res) => {
-    const usertoken = req.headers['authorization'];
+    const usertoken = req.headers.authorization;
     const token = usertoken.split(' ');
     const decoded = jwt.verify(token[1], 'RESTFULAPIs');
     const id = decoded._id;
