@@ -13,6 +13,7 @@ var vegetableRoute = require('./route/vegetableRoute');
 var recipeRoute = require('./route/recipeRoute');
 var fruitRoute = require('./route/fruitsRoute');
 var allIngredientRoute = require('./route/allIngredientsRoute');
+var ordersRoute = require('./route/ordersRoute');
 
 const mongoURI = process.env.MONGODB_URI;
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }).then(() => {
@@ -31,6 +32,7 @@ vegetableRoute(app);
 recipeRoute(app);
 fruitRoute(app);
 allIngredientRoute(app);
+ordersRoute(app);
 
 app.use((req, res) => {
     res.status(404).send({ url: req.originalUrl + ' not found' });
