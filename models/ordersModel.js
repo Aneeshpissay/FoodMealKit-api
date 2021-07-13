@@ -16,6 +16,36 @@ var ItemSchema = new Schema({
     }
 });
 
+var AddressSchema = new Schema({
+    fullname: {
+      type: String
+    },
+    phone: {
+      type: String
+    },
+    pincode: {
+      type: Number
+    },
+    state: {
+      type: String
+    },
+    city: {
+      type: String
+    },
+    houseno: {
+      type: String
+    },
+    roadname: {
+      type: String
+    },
+    area: {
+      type: String
+    },
+    landmark: {
+      type: String
+    },
+});
+
 var OrdersSchema = new Schema({
   orderId: {
     type: Number
@@ -41,6 +71,10 @@ var OrdersSchema = new Schema({
       phone: {
           type: String
       }
+  },
+  address: AddressSchema,
+  deliveredDate: {
+      type: Date
   }
 }, {timestamps: true});
 
