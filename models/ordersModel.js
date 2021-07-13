@@ -75,6 +75,10 @@ var OrdersSchema = new Schema({
   address: AddressSchema,
   deliveredDate: {
       type: Date
+  },
+  paid: {
+      type: Boolean,
+      default: false
   }
 }, {timestamps: true});
 
