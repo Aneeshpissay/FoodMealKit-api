@@ -44,20 +44,12 @@ var UserSchema = new Schema({
     trim: true,
     required: true
   },
-  email: {
-    type: String,
-    unique: true,
-    lowercase: true,
-    trim: true,
-  },
   phone: {
     type: String,
     unique: true
   },
   address: [AddressSchema],
-  photo: PhotoSchema || {
-    type: String
-  },
+  photo: PhotoSchema,
   role: {
     type: String,
     default: 'user'

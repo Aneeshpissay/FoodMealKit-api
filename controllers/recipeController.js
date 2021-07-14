@@ -23,7 +23,7 @@ exports.postRecipe = async (req, res) => {
         const id = decoded._id;
         const user = await User.findById(id);
         const { _id, username, phone, email } = user;
-        const author = {_id: _id, username: username, phone: phone ? phone : '', email: email ? email: ''};
+        const author = {_id: _id, username: username, phone: phone};
         recipe.author = author;
         // const token = req.token;
         // const decoded = jwt.verify(token, "RESTFULAPIs");

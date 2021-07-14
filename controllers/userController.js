@@ -39,12 +39,7 @@ exports.editProfile = async (req, res) => {
     }
     if(req.body?.role) {
         user.role = req.body.role;
-        if(user.email) {
-            main(user.email, 'Thank you for becoming chef', 'Thank you for becoming the chef. Please use the url to login https://food-meal-kit-admin.herokuapp.com/')
-        }
-        else {
-            chefLogin('Thank you for becoming the chef. Please use the url to login https://food-meal-kit-admin.herokuapp.com/', req.body.phone);
-        }
+        chefLogin('Thank you for becoming a chef on our platform. Please use the url to login and start your journey. https://food-meal-kit-admin.herokuapp.com/', user.phone);
     }
     user.save();
     res.json({success: true})

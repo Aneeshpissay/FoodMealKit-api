@@ -14,7 +14,7 @@ exports.postOrders = async (req, res) => {
     const id = decoded._id;
     const user = await User.findById(id);
     const { _id, username, phone, email } = user;
-    const author = {_id: _id, username: username, phone: phone ? phone : '', email: email ? email: ''};
+    const author = {_id: _id, username: username, phone: phone};
     const orders = new Orders(req.body);
     orders.author = author;
     orders.save();
