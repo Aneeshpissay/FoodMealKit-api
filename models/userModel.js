@@ -57,6 +57,10 @@ var UserSchema = new Schema({
   address: [AddressSchema],
   photo: PhotoSchema || {
     type: String
+  },
+  role: {
+    type: String,
+    default: 'user'
   }
 });
 

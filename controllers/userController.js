@@ -1,5 +1,7 @@
 var User = require('../models/userModel');
 var jwt = require('jsonwebtoken');
+const { main } = require('../nodemailer');
+const { chefLogin } = require('../twilio');
 
 exports.login = (req, res) => {
     const user = new User(req.body);
@@ -34,6 +36,15 @@ exports.editProfile = async (req, res) => {
     }
     if(req.files?.profilephoto) {
         user.photo = {url: req.files.profilephoto[0].path, filename: req.files.profilephoto[0].filename, type: req.files.profilephoto[0].mimetype, size: req.files.profilephoto[0].size};
+    }
+    if(req.body?.role) {
+        user.role = req.body.role;
+        if(user.email) {
+            main(user.email, 'Thank you for becoming chef', 'Thank you for becoming the chef. Please use the url to login https://food-meal-kit-admin.herokuapp.com/')
+        }
+        else {
+            chefLogin('Thank you for becoming the chef. Please use the url to login https://food-meal-kit-admin.herokuapp.com/', req.body.phone);
+        }
     }
     user.save();
     res.json({success: true})
