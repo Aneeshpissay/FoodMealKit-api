@@ -31,6 +31,9 @@ var RecipeSchema = new Schema({
       type: String,
       required: true
   },
+  category: {
+    type: String
+  },
   servings: {
     type: Number
   },
@@ -58,6 +61,21 @@ var RecipeSchema = new Schema({
   published: {
       type: Boolean,
       default: false
+  },
+  author: {
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    },
+    username: {
+        type: String
+    },
+    phone: {
+        type: String
+    },
+    email: {
+      type: String
+    }
   }
 }, {timestamps: true});
 

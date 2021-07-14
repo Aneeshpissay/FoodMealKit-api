@@ -1,5 +1,6 @@
 var jwt = require("jsonwebtoken");
 var Recipe = require('../models/recipeModel');
+var User = require('../models/userModel');
 
 exports.postRecipe = async (req, res) => {
     try {
@@ -16,6 +17,14 @@ exports.postRecipe = async (req, res) => {
         if(req.files.recipeVideo) {
             recipe.recipeVideo = {url: req.files.recipeVideo[0].path, filename: req.files.recipeVideo[0].filename, type: req.files.recipeVideo[0].mimetype, size: req.files.recipeVideo[0].size};
         }
+        const usertoken = req.headers['authorization'];
+        const token = usertoken.split(' ');
+        const decoded = jwt.verify(token[1], 'RESTFULAPIs');
+        const id = decoded._id;
+        const user = await User.findById(id);
+        const { _id, username, phone, email } = user;
+        const author = {_id: _id, username: username, phone: phone ? phone : '', email: email ? email: ''};
+        recipe.author = author;
         // const token = req.token;
         // const decoded = jwt.verify(token, "RESTFULAPIs");
         // recipe.author = {id: decoded._id, username: decoded.username, phone: decoded.phone};

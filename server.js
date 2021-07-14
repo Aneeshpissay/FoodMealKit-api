@@ -9,10 +9,7 @@ const express = require('express'),
 require('dotenv').config();
 
 var userRoute = require('./route/userRoute');
-var vegetableRoute = require('./route/vegetableRoute');
 var recipeRoute = require('./route/recipeRoute');
-var fruitRoute = require('./route/fruitsRoute');
-var allIngredientRoute = require('./route/allIngredientsRoute');
 var ordersRoute = require('./route/ordersRoute');
 
 const mongoURI = process.env.MONGODB_URI;
@@ -28,10 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 userRoute(app);
-vegetableRoute(app);
 recipeRoute(app);
-fruitRoute(app);
-allIngredientRoute(app);
 ordersRoute(app);
 
 app.use((req, res) => {

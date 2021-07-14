@@ -63,13 +63,17 @@ var OrdersSchema = new Schema({
   },
   author: {
       _id: {
-          type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
       },
       username: {
           type: String
       },
       phone: {
           type: String
+      },
+      email: {
+        type: String
       }
   },
   address: AddressSchema,
