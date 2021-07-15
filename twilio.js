@@ -84,14 +84,3 @@ exports.userSignin = (req, res, next) => {
         })
         .catch((err) => next(err))
 }
-
-exports.chefLogin = (body, phone) => {
-    client.messages 
-      .create({ 
-         body: body,  
-         messagingServiceSid: 'MGf1c37e4d9aeae230a316d55698295475',      
-         to: `+91${phone}` 
-       }) 
-      .then(message => console.log(message.sid)) 
-      .done();
-}

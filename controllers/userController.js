@@ -1,7 +1,5 @@
 var User = require('../models/userModel');
 var jwt = require('jsonwebtoken');
-const { main } = require('../nodemailer');
-const { chefLogin } = require('../twilio');
 
 exports.login = (req, res) => {
     const user = new User(req.body);
@@ -39,7 +37,6 @@ exports.editProfile = async (req, res) => {
     }
     if(req.body?.role) {
         user.role = req.body.role;
-        chefLogin('Thank you for becoming a chef on our platform. Please use the url to login and start your journey. https://food-meal-kit-admin.herokuapp.com/', user.phone);
     }
     user.save();
     res.json({success: true})
