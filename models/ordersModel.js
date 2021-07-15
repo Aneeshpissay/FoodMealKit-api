@@ -89,9 +89,6 @@ var OrdersSchema = new Schema({
       },
       phone: {
           type: String
-      },
-      email: {
-        type: String
       }
   },
   address: AddressSchema,
