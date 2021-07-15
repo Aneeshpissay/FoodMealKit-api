@@ -3,7 +3,12 @@ var jwt = require('jsonwebtoken');
 var User = require('../models/userModel');
 
 exports.getOrders = async (req, res) => {
-    const orders = await Orders.find();
+    const usertoken = req.headers['authorization'];
+    const token = usertoken.split(' ');
+    const decoded = jwt.verify(token[1], 'RESTFULAPIs');
+    const id = decoded._id;
+    const user = await User.findById(id);
+    const orders = await Orders.find({"author._id": user._id});
     res.json(orders);
 }
 
