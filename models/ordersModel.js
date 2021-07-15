@@ -13,6 +13,24 @@ var ItemSchema = new Schema({
     },
     price: {
         type: Number
+    },
+    category: {
+      type: String
+    },
+    author: {
+      _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      },
+      username: {
+          type: String
+      },
+      phone: {
+          type: String
+      }
+    },
+    photo: {
+      type: String
     }
 });
 

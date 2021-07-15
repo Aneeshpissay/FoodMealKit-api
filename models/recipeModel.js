@@ -72,9 +72,6 @@ var RecipeSchema = new Schema({
     },
     phone: {
         type: String
-    },
-    email: {
-      type: String
     }
   }
 }, {timestamps: true});
