@@ -32,6 +32,8 @@ exports.editProfile = async (req, res) => {
     if(req.body.username) {
         user.username = req.body.username;
     }
+    console.log(req.file);
+    console.log(req.files);
     if(req.file) {
         user.photo = {url: req.file.path, filename: req.file.filename, type: req.file.mimetype, size: req.file.size};
     }
