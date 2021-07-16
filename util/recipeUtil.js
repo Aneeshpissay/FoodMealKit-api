@@ -31,17 +31,34 @@ const row = (data) => {
     return text;
 };
 
+const countData = (data) => {
+    const htmlContent = `<p class="stepCount">${data}</p>`;
+    return htmlContent;
+}
+
 const methodData = (data) => {
-    const htmlContent = `<p class="stepMeasure">${data}</p>`;
+    const htmlContent = `<p class="stepMethod">${data}</p>`;
+    return htmlContent;
+}
+
+const stepImageData = (data) => {
+    const htmlContent = `<img src=${data} width="100" height="100" />`;
     return htmlContent;
 }
 
 const methods = (data) => {
     var text = "";
     for(var i=0;i<data.length;i++){
-        text += `<div class="step">`;
-        text += methodData(`Step ${i + 1}: `);
+        text += `<div>`;
+        text += countData(`Step ${i + 1}: `);
         text += methodData(data[i].method);
+        if(data[i].stepImage.length > 0) {
+            text += '<div class="stepImage">';
+            for(var j=0; j < data[i].stepImage.length; j++) {
+                text += stepImageData(data[i].stepImage[j])
+            }
+            text += '</div>'
+        }
         text += "</div>"
     }
     return text;
@@ -49,12 +66,13 @@ const methods = (data) => {
 
 const getHtmlContent = async (recipe) => {
     let htmlContent = '';
-    htmlContent = `<p class="recipeName">${recipe.title}</p>`;
-    htmlContent = `<p class="recipeDescription">${recipe.description}</p>`;
-    htmlContent = `<p class="cookTime">Ready in under ${recipe.cookTime}</p>`;
-    htmlContent = `<p class="ingredients">Ingredients</p>`;
-    htmlContent = `<p class="cookTime">Servings: ${recipe.servings}</p>`;
-    htmlContent = `<table class="recipe"><thead><tr>`;
+    htmlContent += `<p class="recipeName">${recipe.title}</p>`;
+    htmlContent += `<img src=${recipe.recipeImage[0].url} width="100" height="100" alt=${recipe.title}/>`;
+    htmlContent += `<p class="recipeDescription">${recipe.description}</p>`;
+    htmlContent += `<p class="cookTime">Ready in under ${recipe.cookTime}</p>`;
+    htmlContent += `<p class="ingredients">Ingredients</p>`;
+    htmlContent += `<p class="cookTime">Servings: ${recipe.servings}</p>`;
+    htmlContent += `<table class="recipe"><thead><tr>`;
     htmlContent += await header(columns);
     htmlContent += `</tr></thead>`;
     htmlContent += "<tbody>";

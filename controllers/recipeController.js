@@ -1,7 +1,7 @@
 var jwt = require("jsonwebtoken");
-const puppeteer = require('puppeteer');
 var Recipe = require('../models/recipeModel');
 var User = require('../models/userModel');
+const { generatePDF } = require("../util/generatePDF");
 const { getHtmlContent } = require("../util/recipeUtil");
 
 exports.postRecipe = async (req, res) => {
@@ -70,11 +70,14 @@ exports.publishRecipe = async (req, res) => {
 
 exports.downloadRecipe = async (req, res) => {
     const recipeById = await Recipe.findById(req.params.recipeId);
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
     const htmlData = await getHtmlContent(recipeById);
-    const html = `<head>
+    const pdf = await generatePDF(`<head>
     <style>
+        @media print {
+            body {
+                break-inside: avoid;
+            }
+        }
         .recipeName {
             color: #FFA300;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -91,10 +94,10 @@ exports.downloadRecipe = async (req, res) => {
             font-weight: bold;
         }
         .ingredients {
-            color: #333333;
+            color: #FFA300;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-weight: bold;
-            font-size: 20px;
+            font-size: large;
         }
         .recipe {
             border-collapse: collapse;
@@ -113,20 +116,37 @@ exports.downloadRecipe = async (req, res) => {
         .recipe td {
             padding: 12px 15px;
         }
-        .step {
-            display: flex;
-            flex-direction: row;
+        .recipe tbody tr {
+            border-bottom: 1px solid #FFA300;
+            text-align: center;
         }
-        .stepMeasure {
+        .recipe tbody tr:nth-of-type(even) {
+            background-color: #E9E9E9;
+        }
+        .recipe tbody tr:last-of-type {
+            border-bottom: 2px solid #FFA300;
+        }
+        .stepCount {
             margin-right: 10px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #333333;
             font-weight: bold;
+            white-space: nowrap;
+        }
+        .stepMethod {
+            margin-right: 10px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333333;
         }
         .stepDescription {
             color: #333333;
             font-weight: bold;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .stepImage {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
         }
         .ingredientsName {
             white-space: pre-wrap;
@@ -138,9 +158,9 @@ exports.downloadRecipe = async (req, res) => {
     </head>
     <body>
     ${htmlData}
-    </body`;
-    await page.setContent(html);
-    return page.pdf();
+    </body`);
+    res.set("Content-Type", "application/pdf");
+    res.send(pdf);
 }
 
 function escapeRegex(text) {
