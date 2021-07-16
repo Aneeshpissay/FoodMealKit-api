@@ -10,11 +10,7 @@ module.exports = (app) => {
     app.route('/profile')
         .get(userHandlers.getProfile)
     app.route('/profile')
-        .put(upload.fields([
-            {
-                name: 'profilephoto',
-            }
-        ]),userHandlers.editProfile);
+        .put(upload.single('profile'),userHandlers.editProfile);
     app.route('/sendotp')
         .post(userSignin);
     app.route('/login/:phone/:otp/:username')
