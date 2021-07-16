@@ -43,12 +43,10 @@ exports.editProfile = async (req, res) => {
         if(user.photo) {
             let id = user.photo.filename.split('/')[1];
             cloudinary.uploader.destroy(`Food Meal Kit Blog/${id}`, (err, res) => {
-                user.photo = {uri: req.file.path, filename: req.file.filename, type: req.file.mimetype, size: req.file.size};
+                console.log(res);
             })
         }
-        else {
-            user.photo = {uri: req.file.path, filename: req.file.filename, type: req.file.mimetype, size: req.file.size};
-        }
+        user.photo = {uri: req.file.path, filename: req.file.filename, type: req.file.mimetype, size: req.file.size};
     }
     if(req.body?.role) {
         user.role = req.body.role;
