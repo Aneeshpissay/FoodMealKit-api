@@ -1,6 +1,8 @@
 var jwt = require("jsonwebtoken");
+const puppeteer = require('puppeteer');
 var Recipe = require('../models/recipeModel');
 var User = require('../models/userModel');
+const { getHtmlContent } = require("../util/recipeUtil");
 
 exports.postRecipe = async (req, res) => {
     try {
@@ -64,4 +66,84 @@ exports.publishRecipe = async (req, res) => {
             res.json({success: true});
         }
     })
+}
+
+exports.downloadRecipe = async (req, res) => {
+    const recipeById = await Recipe.findById(req.params.recipeId);
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    const htmlData = await getHtmlContent(recipeById);
+    const html = `<head>
+    <style>
+        .recipeName {
+            color: #FFA300;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: large;
+            font-weight: bold;
+        }
+        .recipeDescription {
+            color: #333333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .cookTime {
+            color: #333333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+        }
+        .ingredients {
+            color: #333333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .recipe {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+        .recipe thead tr {
+            background-color: #FFA300;
+            color: #F4F3F5;
+            text-align: center;
+        }
+        .recipe th,
+        .recipe td {
+            padding: 12px 15px;
+        }
+        .step {
+            display: flex;
+            flex-direction: row;
+        }
+        .stepMeasure {
+            margin-right: 10px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333333;
+            font-weight: bold;
+        }
+        .stepDescription {
+            color: #333333;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .ingredientsName {
+            white-space: pre-wrap;
+            text-align: center;
+            color: #333333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        </style>
+    </head>
+    <body>
+    ${htmlData}
+    </body`;
+    await page.setContent(html);
+    return page.pdf();
+}
+
+exports.searchRecipe = async (req, res) => {
+    const recipe = await Recipe.find({"title": new RegExp(req.params.title)});
+    res.json(recipe);
 }

@@ -23,4 +23,8 @@ module.exports = (app) => {
        .get( recipeHandlers.getRecipeById );
     app.route('/publish/recipe/:recipeId')
         .get( recipeHandlers.publishRecipe );
+    app.route('/download/recipe/:recipeId')
+        .get( recipeHandlers.downloadRecipe );
+    app.route('/search/:title')
+        .get( recipeHandlers.searchRecipe );
 }
