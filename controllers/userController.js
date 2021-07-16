@@ -33,13 +33,13 @@ exports.editProfile = async (req, res) => {
         user.username = req.body.username;
     }
     if(req.file) {
-        if(user.photo === null) {
-            user.photo = {uri: req.file.path, filename: req.file.filename, type: req.file.mimetype, size: req.file.size};
-        }
-        else {
+        if(user.photo) {
             cloudinary.uploader.destroy(user.photo.filename.split('/')[1], (err, res) => {
                 user.photo = {uri: req.file.path, filename: req.file.filename, type: req.file.mimetype, size: req.file.size};
             });
+        }
+        else {
+            user.photo = {uri: req.file.path, filename: req.file.filename, type: req.file.mimetype, size: req.file.size};
         }
     }
     if(req.body?.role) {
