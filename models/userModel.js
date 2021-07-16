@@ -32,7 +32,7 @@ var AddressSchema = new Schema({
 });
 
 const PhotoSchema = new Schema({
-  url: String,
+  uri: String,
   filename: String,
   type: String,
   size: Number
