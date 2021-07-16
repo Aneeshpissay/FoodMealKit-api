@@ -1,6 +1,13 @@
 var User = require('../models/userModel');
 var jwt = require('jsonwebtoken');
 var { cloudinary } = require('../cloudinary');
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+});
+
 exports.login = (req, res) => {
     const user = new User(req.body);
     user.save();
@@ -34,9 +41,10 @@ exports.editProfile = async (req, res) => {
     }
     if(req.file) {
         if(user.photo) {
-            cloudinary.uploader.destroy(user.photo.filename.split('/')[1], (err, res) => {
+            let id = user.photo.filename.split('/')[1];
+            cloudinary.uploader.destroy(`Food Meal Kit Blog/${id}`, (err, res) => {
                 user.photo = {uri: req.file.path, filename: req.file.filename, type: req.file.mimetype, size: req.file.size};
-            });
+            })
         }
         else {
             user.photo = {uri: req.file.path, filename: req.file.filename, type: req.file.mimetype, size: req.file.size};
