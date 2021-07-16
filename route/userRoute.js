@@ -2,7 +2,7 @@ var userHandlers = require('../controllers/userController');
 const { userSignin, userLogin } = require('../twilio');
 const { storage } = require('../cloudinary');
 var multer = require('multer');
-const upload = multer({storage});
+const upload = multer({storage, limits: { fieldSize: 15 * 1024 * 1024 }});
 
 module.exports = (app) => {
     app.route('/auth/login')
