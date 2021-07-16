@@ -143,7 +143,12 @@ exports.downloadRecipe = async (req, res) => {
     return page.pdf();
 }
 
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 exports.searchRecipe = async (req, res) => {
-    const recipe = await Recipe.find({"title": new RegExp(req.params.title)});
+    const title = new RegExp(escapeRegex(req.query.title), 'gi');
+    const recipe = await Recipe.find({title: title});
     res.json(recipe);
 }

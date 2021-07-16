@@ -25,6 +25,6 @@ module.exports = (app) => {
         .get( recipeHandlers.publishRecipe );
     app.route('/download/recipe/:recipeId')
         .get( recipeHandlers.downloadRecipe );
-    app.route('/search/:title')
+    app.route('/search')
         .get( recipeHandlers.searchRecipe );
 }
