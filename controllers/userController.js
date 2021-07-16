@@ -1,6 +1,6 @@
 var User = require('../models/userModel');
 var jwt = require('jsonwebtoken');
-
+var { cloudinary } = require('../cloudinary');
 exports.login = (req, res) => {
     const user = new User(req.body);
     user.save();
@@ -32,10 +32,15 @@ exports.editProfile = async (req, res) => {
     if(req.body.username) {
         user.username = req.body.username;
     }
-    console.log(req.file);
-    console.log(req.files);
     if(req.file) {
-        user.photo = {url: req.file.path, filename: req.file.filename, type: req.file.mimetype, size: req.file.size};
+        if(user.photo === null) {
+            user.photo = {uri: req.file.path, filename: req.file.filename, type: req.file.mimetype, size: req.file.size};
+        }
+        else {
+            cloudinary.uploader.destroy(user.photo.filename.split('/')[1], (err, res) => {
+                user.photo = {uri: req.file.path, filename: req.file.filename, type: req.file.mimetype, size: req.file.size};
+            });
+        }
     }
     if(req.body?.role) {
         user.role = req.body.role;
