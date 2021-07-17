@@ -12,6 +12,11 @@ exports.getOrders = async (req, res) => {
     res.json(orders);
 }
 
+exports.getOrder =  async (req, res) => {
+    const orders = await Orders.find();
+    res.json(orders);
+}
+
 exports.postOrders = async (req, res) => {
     const usertoken = req.headers['authorization'];
     const token = usertoken.split(' ');

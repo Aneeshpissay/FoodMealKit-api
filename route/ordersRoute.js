@@ -7,4 +7,6 @@ module.exports = (app) => {
         .get( orderHandlers.getOrders );
     app.route('/orders/cancel/:orderid')
         .get( orderHandlers.cancelOrder );
+    app.route('/orders/list')
+        .get( orderHandlers.getOrder );
 }
