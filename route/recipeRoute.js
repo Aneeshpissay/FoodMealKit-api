@@ -28,5 +28,5 @@ module.exports = (app) => {
     app.route('/search')
         .get( recipeHandlers.searchRecipe );
     app.route('/comment/:recipeId')
-        .put(upload.single('commentImage'), recipeHandlers.addComment );
+        .put( recipeHandlers.addComment );
 }
