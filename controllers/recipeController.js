@@ -4,13 +4,6 @@ var Comment = require('../models/commentModel');
 var User = require('../models/userModel');
 const { generatePDF } = require("../util/generatePDF");
 const { getHtmlContent } = require("../util/recipeUtil");
-const { cloudinary } = require('../cloudinary');
-
-cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET
-});
 
 exports.postRecipe = async (req, res) => {
     try {
@@ -184,12 +177,7 @@ exports.searchRecipe = async (req, res) => {
 
 exports.addComment = async (req, res) => {
     const recipeId = await Recipe.findById(req.params.recipeId);
-    const comments = new Comment({description: req.body.description});
-    if(req.body.commentImage) {
-        cloudinary.uploader.upload(req.body.commentImage, (err, res) => {
-            comments.commentImage = res.secure_url;
-        })
-    }
+    const comments = new Comment(req.body);
     const usertoken = req.headers['authorization'];
     const token = usertoken.split(' ');
     const decoded = jwt.verify(token[1], 'RESTFULAPIs');
@@ -198,8 +186,18 @@ exports.addComment = async (req, res) => {
     const { _id, username, phone } = user;
     const author = {_id: _id, username: username, phone: phone};
     comments.author = author;
+    console.log(req.file);
+    if(req.file) {
+        comments.commentImage = req.file.path;
+    }
+    comments.author = user;
     comments.save((err, comment) => {
-        recipeId.comments.push({_id: comment._id, commentImage: comment.commentImage, description: comment.description, createdAt: comment.createdAt, author: comment.author});
+        if(req.file) {
+            recipeId.comments.push({_id: comment._id, commentImage: req.file.path, description: req.body.description, createdAt: comment.createdAt, author: comment.author});
+        }
+        else {
+            recipeId.comments.push({_id: comment._id, description: req.body.description, createdAt: comment.createdAt, author: comment.author});
+        }
         recipeId.save();
         res.json({success: true});
     })
