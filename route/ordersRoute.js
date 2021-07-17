@@ -5,4 +5,6 @@ module.exports = (app) => {
         .post( orderHandlers.postOrders );
     app.route('/orders')
         .get( orderHandlers.getOrders );
+    app.route('/orders/cancel/:orderid')
+        .get( orderHandlers.cancelOrder );
 }

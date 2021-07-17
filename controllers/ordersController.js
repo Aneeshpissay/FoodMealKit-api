@@ -25,3 +25,14 @@ exports.postOrders = async (req, res) => {
     orders.save();
     res.json({success: true});
 }
+
+exports.cancelOrder = async (req, res) => {
+    const usertoken = req.headers['authorization'];
+    const token = usertoken.split(' ');
+    const decoded = jwt.verify(token[1], 'RESTFULAPIs');
+    const id = decoded._id;
+    const user = await User.findById(id);
+    const orders = await Orders.findOne({"author._id": user._id, "_id": req.params.orderid});
+    orders.status = 'Cancelled';
+    res.json({success: true});
+}
