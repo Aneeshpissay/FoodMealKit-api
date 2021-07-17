@@ -65,6 +65,18 @@ var RecipeSchema = new Schema({
     },
     commentImage: {
         type: String
+    },
+    author: {
+      _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      },
+      username: {
+          type: String
+      },
+      phone: {
+          type: String
+      }
     }
   }],
   published: {

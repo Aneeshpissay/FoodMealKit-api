@@ -178,15 +178,24 @@ exports.searchRecipe = async (req, res) => {
 exports.addComment = async (req, res) => {
     const recipeId = await Recipe.findById(req.params.recipeId);
     const comments = new Comment(req.body);
+    const usertoken = req.headers['authorization'];
+    const token = usertoken.split(' ');
+    const decoded = jwt.verify(token[1], 'RESTFULAPIs');
+    const id = decoded._id;
+    const user = await User.findById(id);
+    const { _id, username, phone } = user;
+    const author = {_id: _id, username: username, phone: phone};
+    comments.author = author;
     if(req.file) {
         comments.commentImage = req.file.path;
     }
+    comments.author = user;
     comments.save((err, comment) => {
         if(req.file) {
-            recipeId.comments.push({_id: comment._id, commentImage: req.file.path, description: req.body.description});
+            recipeId.comments.push({_id: comment._id, commentImage: req.file.path, description: req.body.description, createdAt: comment.createdAt, author: comment.author});
         }
         else {
-            recipeId.comments.push({description: req.body.description});
+            recipeId.comments.push({_id: comment._id, description: req.body.description, createdAt: comment.createdAt, author: comment.author});
         }
         recipeId.save();
         res.json({success: true});
