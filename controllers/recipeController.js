@@ -4,7 +4,7 @@ var Comment = require('../models/commentModel');
 var User = require('../models/userModel');
 const { generatePDF } = require("../util/generatePDF");
 const { getHtmlContent } = require("../util/recipeUtil");
-
+const { cloudinary } = require('../cloudinary');
 exports.postRecipe = async (req, res) => {
     try {
         const recipe = new Recipe(req.body);
@@ -177,7 +177,12 @@ exports.searchRecipe = async (req, res) => {
 
 exports.addComment = async (req, res) => {
     const recipeId = await Recipe.findById(req.params.recipeId);
-    const comments = new Comment(req.body);
+    const comments = new Comment({description: req.body.description});
+    if(req.body.commentImage) {
+        cloudinary.uploader.upload(req.body.commentImage, (err, res) => {
+            comments.commentImage = res.secure_url;
+        })
+    }
     const usertoken = req.headers['authorization'];
     const token = usertoken.split(' ');
     const decoded = jwt.verify(token[1], 'RESTFULAPIs');
