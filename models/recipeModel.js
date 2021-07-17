@@ -59,9 +59,6 @@ var RecipeSchema = new Schema({
       type: String,
       required: true
     },
-    commentImage: {
-        type: String
-    },
     author: {
       _id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -73,9 +70,6 @@ var RecipeSchema = new Schema({
       phone: {
           type: String
       }
-    },
-    createdAt: {
-      type: Date
     }
   }],
   published: {

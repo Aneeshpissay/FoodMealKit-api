@@ -186,16 +186,8 @@ exports.addComment = async (req, res) => {
     const { _id, username, phone } = user;
     const author = {_id: _id, username: username, phone: phone};
     comments.author = author;
-    if(req.file) {
-        comments.commentImage = req.file.path;
-    }
     comments.save((err, comment) => {
-        if(req.file) {
-            recipeId.comments.push({commentImage: req.file.path, description: req.body.description, createdAt: comment.createdAt, author: comment.author});
-        }
-        else {
-            recipeId.comments.push({description: req.body.description, createdAt: comment.createdAt, author: comment.author});
-        }
+        recipeId.comments.push({description: req.body.description, author: comment.author});
         recipeId.save();
         res.json({success: true});
     })

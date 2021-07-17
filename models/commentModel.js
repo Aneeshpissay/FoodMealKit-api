@@ -6,9 +6,6 @@ var CommentSchema = new Schema({
       type: String,
       required: true
   },
-  commentImage: {
-      type: String
-  },
   author: {
     _id: {
       type: mongoose.Schema.Types.ObjectId,
