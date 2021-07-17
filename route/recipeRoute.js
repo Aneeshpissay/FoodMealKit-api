@@ -1,6 +1,6 @@
 const {storage } = require('../cloudinary');
 var multer = require('multer');
-const upload = multer({storage, limits: { fieldSize: 75 * 1024 * 1024}});
+const upload = multer({storage, limits: { fieldSize: 15 * 1024 * 1024}});
 var recipeHandlers = require('../controllers/recipeController');
 
 module.exports = (app) => {
