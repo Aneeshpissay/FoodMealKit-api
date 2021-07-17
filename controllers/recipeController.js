@@ -5,6 +5,13 @@ var User = require('../models/userModel');
 const { generatePDF } = require("../util/generatePDF");
 const { getHtmlContent } = require("../util/recipeUtil");
 const { cloudinary } = require('../cloudinary');
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+});
+
 exports.postRecipe = async (req, res) => {
     try {
         const recipe = new Recipe(req.body);
