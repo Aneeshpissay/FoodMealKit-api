@@ -70,6 +70,10 @@ var RecipeSchema = new Schema({
       phone: {
           type: String
       }
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now()
     }
   }],
   published: {
