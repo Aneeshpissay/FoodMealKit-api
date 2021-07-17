@@ -55,8 +55,17 @@ var RecipeSchema = new Schema({
       }]
   }],
   comments: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Comment"
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment"
+    },
+    description: {
+      type: String,
+      required: true
+    },
+    commentImage: {
+        type: String
+    }
   }],
   published: {
       type: Boolean,

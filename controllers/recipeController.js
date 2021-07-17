@@ -1,5 +1,6 @@
 var jwt = require("jsonwebtoken");
 var Recipe = require('../models/recipeModel');
+var Comment = require('../models/commentModel');
 var User = require('../models/userModel');
 const { generatePDF } = require("../util/generatePDF");
 const { getHtmlContent } = require("../util/recipeUtil");
@@ -172,4 +173,22 @@ exports.searchRecipe = async (req, res) => {
     const category = new RegExp(escapeRegex(req.query.category), 'gi');
     const recipe = await Recipe.find({title: title, category: category});
     res.json(recipe);
+}
+
+exports.addComment = async (req, res) => {
+    const recipeId = await Recipe.findById(req.params.recipeId);
+    const comments = new Comment(req.body);
+    if(req.file) {
+        comments.commentImage = req.file.path;
+    }
+    comments.save((err, comment) => {
+        if(req.file) {
+            recipeId.comments.push({_id: comment._id, commentImage: req.file.path, description: req.body.description});
+        }
+        else {
+            recipeId.comments.push({description: req.body.description});
+        }
+        recipeId.save();
+        res.json({success: true});
+    })
 }
