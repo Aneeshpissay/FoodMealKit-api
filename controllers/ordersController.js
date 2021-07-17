@@ -34,5 +34,6 @@ exports.cancelOrder = async (req, res) => {
     const user = await User.findById(id);
     const orders = await Orders.findOne({"author._id": user._id, "_id": req.params.orderid});
     orders.status = 'Cancelled';
+    orders.save();
     res.json({success: true});
 }
