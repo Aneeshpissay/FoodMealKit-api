@@ -7,6 +7,6 @@ module.exports = (app) => {
         .get( orderHandlers.getOrders );
     app.route('/orders/list')
         .get( orderHandlers.getOrder );
-    app.route('/orders/status/:orderid')
+    app.route('/orders/status')
         .put( orderHandlers.changeStatusOrder );
 }
