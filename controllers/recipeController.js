@@ -46,8 +46,17 @@ exports.postRecipe = async (req, res) => {
 }
 
 exports.getRecipe = async (req, res) => {
-    const publishedRecipe = await Recipe.find({published: true});
-    const savedRecipe = await Recipe.find({published: false});
+    const recipe = await Recipe.find({published: true});
+    res.json(recipe);
+}
+
+exports.getRecipeByChef = async (req, res) => {
+    const usertoken = req.headers['authorization'];
+    const token = usertoken.split(' ');
+    const decoded = jwt.verify(token[1], 'RESTFULAPIs');
+    const id = decoded._id;
+    const publishedRecipe = await Recipe.find({published: true, "author._id": id});
+    const savedRecipe = await Recipe.find({published: false, "author._id": id});
     res.json({publishedRecipe: publishedRecipe, savedRecipe: savedRecipe});
 }
 
