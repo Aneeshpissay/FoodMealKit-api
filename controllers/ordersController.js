@@ -35,11 +35,19 @@ exports.postOrders = async (req, res) => {
     res.json({success: true});
 }
 
-exports.changeStatusOrder = async (req, res) => {
-    const orders = await Orders.find({"_id" : {"$in" : req.body.orderIds}})
-    orders.map((order) => {
-        order.status = req.body.status;
-    });
+exports.cancelOrder = async (req, res) => {
+    const usertoken = req.headers['authorization'];
+    const token = usertoken.split(' ');
+    const decoded = jwt.verify(token[1], 'RESTFULAPIs');
+    const id = decoded._id;
+    const user = await User.findById(id);
+    const orders = await Orders.findOne({"author._id": user._id, "_id": req.params.orderid});
+    orders.status = 'Cancelled';
     orders.save();
+    res.json({success: true});
+}
+
+exports.changeStatusOrder = async (req, res) => {
+    await Orders.updateMany({"_id" : {$in: req.body.orderIds}}, {$set: req.body.status});
     res.json({success: true});
 }
