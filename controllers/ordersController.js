@@ -37,7 +37,9 @@ exports.postOrders = async (req, res) => {
 
 exports.changeStatusOrder = async (req, res) => {
     const orders = await Orders.find({"_id" : {"$in" : req.body.orderIds}})
-    orders.status = req.body.status;
+    orders.map((order) => {
+        order.status = req.body.status;
+    });
     orders.save();
     res.json({success: true});
 }
