@@ -36,7 +36,7 @@ exports.postOrders = async (req, res) => {
 }
 
 exports.changeStatusOrder = async (req, res) => {
-    const orders = await Orders.findById(req.params.orderid);
+    const orders = await Orders.find({"_id" : {"$in" : req.body.orderIds}})
     orders.status = req.body.status;
     orders.save();
     res.json({success: true});
