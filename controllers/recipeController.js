@@ -46,7 +46,7 @@ exports.postRecipe = async (req, res) => {
 }
 
 exports.getRecipe = async (req, res) => {
-    const recipe = await Recipe.find({published: true});
+    const recipe = await Recipe.find({published: true}).sort({"createdAt": -1});
     res.json(recipe);
 }
 

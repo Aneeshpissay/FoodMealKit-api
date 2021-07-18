@@ -11,4 +11,6 @@ module.exports = (app) => {
         .get( orderHandlers.getOrder );
     app.route('/orders/status')
         .put( orderHandlers.changeStatusOrder );
+    app.route('/orders/download/:orderId')
+        .get( orderHandlers.downloadOrderInvoice );
 }
