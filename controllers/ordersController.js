@@ -48,6 +48,6 @@ exports.cancelOrder = async (req, res) => {
 }
 
 exports.changeStatusOrder = async (req, res) => {
-    await Orders.updateMany({"_id" : {$in: req.body.orderIds}}, {$set: req.body.status});
+    await Orders.updateMany({"_id" : {$in: req.body.orderIds}}, {$set: {status: req.body.status}});
     res.json({success: true});
 }
