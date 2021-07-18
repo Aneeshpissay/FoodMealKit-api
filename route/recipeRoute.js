@@ -20,7 +20,7 @@ module.exports = (app) => {
     app.route('/recipe')
        .get( recipeHandlers.getRecipe );
     app.route('/recipe/chef')
-       .get( recipeHandlers.getRecipe );
+       .get( recipeHandlers.getRecipeByChef );
     app.route('/recipe/:recipeId')
        .get( recipeHandlers.getRecipeById );
     app.route('/publish/recipe/:recipeId')
