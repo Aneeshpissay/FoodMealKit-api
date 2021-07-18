@@ -13,7 +13,11 @@ exports.getOrders = async (req, res) => {
 }
 
 exports.getOrder =  async (req, res) => {
-    const orders = await Orders.find();
+    const usertoken = req.headers['authorization'];
+    const token = usertoken.split(' ');
+    const decoded = jwt.verify(token[1], 'RESTFULAPIs');
+    const id = decoded._id;
+    const orders = await Orders.find({"item.author._id": id});
     res.json(orders);
 }
 
