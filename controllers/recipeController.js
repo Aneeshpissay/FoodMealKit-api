@@ -180,7 +180,7 @@ function escapeRegex(text) {
 exports.searchRecipe = async (req, res) => {
     const title = new RegExp(escapeRegex(req.query.title), 'gi');
     const category = new RegExp(escapeRegex(req.query.category), 'gi');
-    const recipe = await Recipe.find({title: title, category: category});
+    const recipe = await Recipe.find({title: title, category: category, published: true});
     res.json(recipe);
 }
 
