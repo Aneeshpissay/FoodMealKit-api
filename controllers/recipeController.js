@@ -17,6 +17,7 @@ exports.postRecipe = async (req, res) => {
             var preparationObj = JSON.parse(preparation);
             return preparationObj;
         })
+        console.log(req.files);
         if(req.files.recipeVideo) {
             recipe.recipeVideo = req.files.recipeVideo.map(f => ({ url: f.path, filename: f.filename, type: f.mimetype, size: f.size }));
         }
