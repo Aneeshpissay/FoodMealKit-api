@@ -10,8 +10,7 @@ module.exports = (app) => {
                 name: 'recipeImage',
             },
             {
-                name: 'recipeVideo',
-                maxCount: 1
+                name: 'recipeVideo'
             },
             {
                 name: 'stepImage',
